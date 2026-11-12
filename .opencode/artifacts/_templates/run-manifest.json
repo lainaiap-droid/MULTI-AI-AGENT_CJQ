@@ -1,0 +1,20 @@
+{
+  "run_id": "RUN-YYYYMMDD-HHMMSS",
+  "started_at": "ISO-8601",
+  "finished_at": null,
+  "inputs": {
+    "confluence_page_id": null,
+    "confluence_url": null,
+    "jira_project": null,
+    "qase_project": null,
+    "scope": null,
+    "constraints": []
+  },
+  "external_tools": {
+    "confluence": "UNKNOWN",
+    "jira": "UNKNOWN",
+    "qase": "UNKNOWN"
+  },
+  "stages": [],
+  "run_status": "IN_PROGRESS"
+}

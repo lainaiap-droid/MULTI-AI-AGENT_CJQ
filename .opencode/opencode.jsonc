@@ -1,0 +1,31 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "qa-lead",
+  "mcp": {
+    "jira": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v2/mcp"
+    },
+    "qa-tools": {
+      "type": "local",
+      "command": ["node", ".opencode/mcp/qa-tools.mjs"],
+      "enabled": true
+    },
+    "qase": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "-p",
+        "@qase/mcp-server",
+        "-p",
+        "hono@4",
+        "qase-mcp-server"
+      ],
+      "enabled": true,
+      "environment": {
+        "QASE_API_TOKEN": "{file:~/.secrets/qase-token}"
+      }
+    }
+  }
+}

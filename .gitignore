@@ -1,0 +1,45 @@
+# ---- Секреты ----
+# Никогда не коммитим реальные токены и файлы секретов.
+*.env
+.env
+.env.*
+!.env.example
+*.token
+secrets/
+.secrets/
+
+# ---- Артефакты запусков ----
+# Результаты прогонов (source.md с текстом требований, отчёты) не публикуются.
+# Шаблоны (_templates/) и README.md остаются под контролем версий.
+.opencode/artifacts/*
+!.opencode/artifacts/_templates/
+!.opencode/artifacts/_templates/**
+!.opencode/artifacts/README.md
+
+# ---- Локальный конфиг ----
+# Переопределения (siteId, локальные пути) не покидают машину.
+.opencode/local.jsonc
+.opencode/local.json
+
+# ---- Черновики и бэкапы ----
+# Не выгружаются: рабочая копия остаётся на диске.
+.opencode/TEMP/
+.opencode/AGENTS.single-agent.backup.md
+
+# ---- IDE ----
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# ---- ОС ----
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- Зависимости и сборка ----
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
