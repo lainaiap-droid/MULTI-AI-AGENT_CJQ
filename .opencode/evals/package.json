@@ -1,0 +1,13 @@
+{
+  "name": "qa-multiagent-evals",
+  "private": true,
+  "type": "module",
+  "description": "Evals для проверки качества артефактов QA-мультиагента",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "evals": "node run-evals.mjs",
+    "evals:list": "node run-evals.mjs --list"
+  }
+}

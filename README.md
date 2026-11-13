@@ -1,4 +1,4 @@
-# QA-мультиагент 1.4.0
+# QA-мультиагент 1.5.0
 
 Мультиагентная система для QA-процесса по циклу **Confluence → Jira → Qase**: читает требования, делает ревью, проектирует задачи Jira и тестовую модель, проверяет Quality Gates и создаёт сущности во внешних системах.
 
@@ -13,6 +13,8 @@
 
 Только `qa-lead` общается с пользователем и вызывает Confluence, Jira и Qase. Дочерние агенты работают исключительно с файлами артефактов и не имеют доступа к shell, сети и внешним инструментам.
 
+Отдельно от агентов работает слой `evals` — измерение качества артефактов. Он не входит в архитектуру «1 + 3» и не заменяет Quality Gates.
+
 ## Структура
 
 ```text
@@ -20,10 +22,11 @@
 ├── AGENTS.md                  # общие правила для всех агентов
 ├── opencode.jsonc             # конфигурация MCP и default_agent
 ├── agents/                    # qa-lead + три subagent
-├── skills/                    # процедуры этапов и их шаблоны
+├── skills/                    # процедуры этапов, шаблоны и skill evals
 ├── references/integrations.md # контракты инструментов и схема секретов
 ├── plugins/confluence/        # Confluence REST API v2, read-only
 ├── mcp/qa-tools.mjs           # резервный MCP (по подтверждению)
+├── evals/                     # детерминированные проверки и LLM-judge
 ├── artifacts/                 # шаблоны и результаты запусков
 └── legacy-v1/                 # tools из V1, не регистрируются в V2
 ```
@@ -67,6 +70,18 @@ icacls "$env:USERPROFILE\.secrets" /inheritance:r /grant:r "$env:USERNAME:(OI)(C
 Каждый запуск пишет в `.opencode/artifacts/<run_id>/`: `run-manifest.json`, `source.md`, `requirement-review.v1.md`, `jira-tasks.v1.md`, `test-model.v1.md`, `created-entities.json`, `coverage-map.md`, `final-report.md`. Подробности — в `.opencode/artifacts/README.md`.
 
 Каталоги запусков не попадают в git: они содержат текст требований заказчика.
+
+## Evals
+
+Слой оценки качества артефактов: детерминированные проверки трассировки, покрытия, структуры и гигиены плюс опциональный LLM-judge по рубрике. Зависимостей нет.
+
+```bash
+node .opencode/evals/run-evals.mjs --selftest   # мутационная проверка самих проверок
+node .opencode/evals/run-evals.mjs              # прогон публичных кейсов
+node .opencode/evals/run-evals.mjs --case SYN-SORT-001 --verbose
+```
+
+Публичный набор содержит синтетические кейсы; реальные страницы Confluence ведутся в `evals/cases/private/` и не публикуются. Подробности — в [`.opencode/evals/README.md`](.opencode/evals/README.md) и skill `evals`.
 
 ## Безопасность
 

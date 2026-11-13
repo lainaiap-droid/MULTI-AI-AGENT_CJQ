@@ -21,6 +21,12 @@ secrets/
 .opencode/local.jsonc
 .opencode/local.json
 
+# ---- Evals ----
+# Приватные кейсы (реальные страницы Confluence) и ответы judge не публикуются.
+# Публичные синтетические кейсы, baseline и отчёты коммитятся осознанно.
+.opencode/evals/cases/private/
+**/_judge/
+
 # ---- Черновики и бэкапы ----
 # Не выгружаются: рабочая копия остаётся на диске.
 .opencode/TEMP/

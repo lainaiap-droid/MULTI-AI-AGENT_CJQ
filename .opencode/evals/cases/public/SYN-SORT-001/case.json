@@ -1,0 +1,48 @@
+{
+  "id": "SYN-SORT-001",
+  "title": "Сортировка списка задач по приоритету и сроку",
+  "visibility": "public",
+  "source": "synthetic",
+  "source_file": "source.md",
+  "description": "Небольшая страница требований: сортировка задач в списке. Достаточный объём для проверки всех трёх этапов без внешних зависимостей.",
+  "expect": {
+    "minRequirements": 6,
+    "minTasks": 3,
+    "minTestCases": 6
+  },
+  "judge": {
+    "requireDecision": true,
+    "rubric": [
+      {
+        "id": "J-FAITHFUL",
+        "title": "Нет выдуманных требований",
+        "weight": 3,
+        "question": "Все требования в Requirement Review выводятся из текста источника. Отсутствуют условия, которых нет в source.md."
+      },
+      {
+        "id": "J-AC-SCOPE",
+        "title": "AC не добавляют условий",
+        "weight": 3,
+        "question": "Acceptance Criteria не содержат правил, которых нет в источнике, и не подменяют открытые вопросы собственными решениями."
+      },
+      {
+        "id": "J-AMB-EXPLICIT",
+        "title": "Неоднозначности вынесены явно",
+        "weight": 2,
+        "question": "Спорные места источника оформлены как AMB/CON/OQ, а не сглажены в единую трактовку."
+      },
+      {
+        "id": "J-TEST-DERIVED",
+        "title": "Тесты выводятся из требований",
+        "weight": 2,
+        "question": "Каждый сценарий проверяет поведение из Requirement Review; Expected Result проверяем и не вводит новых бизнес-правил."
+      },
+      {
+        "id": "J-TASK-READY",
+        "title": "Задачи готовы к исполнению",
+        "weight": 2,
+        "question": "Summary и Description понятны разработчику без истории чата и задают проверяемый результат."
+      }
+    ]
+  }
+}

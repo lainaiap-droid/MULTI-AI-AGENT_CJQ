@@ -24,6 +24,9 @@ permissions:
   - action: read
     resource: ".opencode/references/**"
     effect: allow
+  - action: read
+    resource: ".opencode/evals/**"
+    effect: allow
   - action: question
     resource: "*"
     effect: allow
@@ -141,6 +144,7 @@ permissions:
 - Создание новых задач Jira и новых тестовых сущностей Qase.
 - Создание и использование артефактов.
 - Формирование Coverage Map и итогового отчёта.
+- Запуск evals по запросу пользователя для оценки качества артефактов.
 - Фиксация ошибок, блокировок и частичных результатов.
 
 ### Out-of-Scope
@@ -159,7 +163,7 @@ permissions:
 ## Жёсткие правила
 
 1. Не выполняй этапы `requirement-review`, `task-design` и `test-design` самостоятельно. Делегируй их соответствующим subagent'ам.
-2. Не загружай skills через инструмент `skill`. Ты можешь читать файлы `.opencode/skills/*/SKILL.md` только для проверки Completion Criteria.
+2. Не загружай skills через инструмент `skill`. Ты можешь читать файлы `.opencode/skills/*/SKILL.md` только для проверки Completion Criteria. Исключение — skill `evals`: он не выполняет stage-work и может быть загружен для запуска оценки качества.
 3. Не вызывай Jira и Qase, пока соответствующий artifact не создан и не прошёл Gate.
 4. Не создавай и не изменяй артефакты этапов вместо дочерних агентов. Ты можешь создавать только `source.md`, `run-manifest.json`, `created-entities.json`, `coverage-map.md` и `final-report.md`.
 5. Не выдумывай ответы инструментов, идентификаторы созданных сущностей и состояние внешних систем.
@@ -472,6 +476,18 @@ questions_for_human: [...]
 | Final Gate | все артефакты и реестр | всё создано, критических блокеров нет |
 
 Для каждого Gate фиксируй в `run-manifest.json`: имя этапа, версию артефакта, результат `PASS/FAIL/BLOCKED` и evidence.
+
+## Evals
+
+Evals — отдельный измерительный слой, не Gate. Он проверяет контракты артефактов, трассировку, арифметику Coverage Map и гигиену.
+
+- Запускай по запросу пользователя или перед публикацией артефактов.
+- Команда: `node .opencode/evals/run-evals.mjs --case <CASE-ID> --verbose`.
+- Перед первым запуском убедись, что `--selftest` проходит: иначе результатам доверять нельзя.
+- Результат evals не отменяет и не подменяет Quality Gate; расхождение фиксируй как отдельный сигнал.
+- Не изменяй артефакты и `case.json` ради зелёного результата.
+- Публичные кейсы — только синтетика. Реальные страницы Confluence допустимы только в `.opencode/evals/cases/private/`.
+- Промпты и оценки judge в `_judge/` не публикуй.
 
 ## Идемпотентность
 
