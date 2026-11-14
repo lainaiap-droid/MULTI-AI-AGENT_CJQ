@@ -1,7 +1,7 @@
 ---
 description: Оркестратор QA-процесса. Читает требования из Confluence, делегирует ревью требований, дизайн Jira-задач и тестовой модели, проверяет Quality Gates, создаёт сущности в Jira и Qase и формирует итоговый отчёт
 mode: primary
-steps: 60
+steps: 200
 permissions:
   - action: "*"
     resource: "*"
@@ -42,42 +42,45 @@ permissions:
   - action: "jira*"
     resource: "*"
     effect: allow
+  # Действие MCP-инструмента имеет вид <server>_<tool>.
+  # Сервер называется qase, а его инструменты уже начинаются
+  # с qase_, поэтому действие выглядит как qase_qase_get.
+  # Правила без префикса сервера не совпадали ни с чем,
+  # кроме широкого qase*, и весь Qase был закрыт.
   - action: "qase*"
     resource: "*"
     effect: deny
-  - action: "qase_get"
+  - action: "qase_qase_get"
     resource: "*"
     effect: allow
-  - action: "qql_search"
+  - action: "qase_qql_search"
     resource: "*"
     effect: allow
-  - action: "qql_help"
+  - action: "qase_qql_help"
     resource: "*"
     effect: allow
-  - action: "qase_project_context"
+  - action: "qase_qase_project_context"
     resource: "*"
     effect: allow
-  - action: "qase_tool_help"
+  - action: "qase_qase_tool_help"
     resource: "*"
     effect: allow
-  - action: "qase_discover_tools"
+  - action: "qase_qase_discover_tools"
     resource: "*"
     effect: allow
-  - action: "qase_suite_upsert"
+  - action: "qase_qase_suite_upsert"
     resource: "*"
     effect: allow
-  - action: "qase_case_bulk_create"
+  - action: "qase_qase_case_bulk_create"
     resource: "*"
     effect: allow
-  - action: "qa_tools_*"
-    resource: "*"
-    effect: ask
-  - action: "qa-tools_*"
-    resource: "*"
-    effect: ask
+  # Резервный qa-tools дублирует confluence и qase. В
+  # non-interactive прогоне правило ask некому подтвердить,
+  # поэтому любой вызов отклоняется. Чтобы агент не принимал
+  # этот отказ за недоступность Qase, сервер закрыт явно.
   - action: "qa-tools*"
     resource: "*"
-    effect: ask
+    effect: deny
   - action: "jira_edit*"
     resource: "*"
     effect: deny

@@ -1,25 +1,25 @@
 [
   {
     "id": "EVC-001",
-    "name": "Полный цикл по подтверждённой странице 2818049",
+    "name": "Полный цикл по подтверждённой странице",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.1–3.2.5, Приложения А–В",
       "stage": "full-cycle"
     },
     "expected_properties": [
-      "Агент должен получить страницу 2818049 через confluence_get_page с bodyFormat=storage и сохранить source.md с page_version=5, source_status=Verified из contentStatus.name, URL и retrieved_at",
+      "Агент должен получить страницу  через confluence_get_page с bodyFormat=storage и сохранить source.md с page_version=5, source_status=Verified из contentStatus.name, URL и retrieved_at",
       "Агент должен выделить REQ, BR, AC, VAL, BND, AMB, CON, MISS, RISK и OQ из раздела 3 и Приложений А–В, каждый с ссылкой на SRC-001 и номером пункта ТЗ",
       "Агент должен построить Traceability REQ → BR/AC только по существующим ID и не оставлять ссылок на несуществующие ID",
-      "Агент должен установить статус Requirement Review READY, так как Content status = Verified и Unconfirmed Fragments не обнаружены",
-      "Агент должен сформировать задачи с Source Requirements, Traceability и AC: MISSING для REQ-023 и REQ-024, у которых AC в Traceability отсутствуют",
+      "Агент должен установить статус Requirement Review по правилам skill requirement-review: READY, если неподтверждённых фрагментов нет, либо PARTIAL с явным перечислением Unconfirmed Fragments и их влияния на выводы, если они есть; при этом источник подтверждён (Content status = Verified), поэтому статус BLOCKED не обоснован",
+      "Агент должен сформировать задачи с Source Requirements и Traceability, помечая AC: MISSING только для тех требований, у которых в Traceability отсутствуют Acceptance Criteria, и указывая конкретные AC для требований, у которых они есть",
       "Агент должен сформировать тестовые сценарии с проверяемым Expected Result и Source Requirement из REQ/BND, включая лимит версий 10 и запрет удаления проверенной версии",
       "Агент должен брать Jira Key только из фактического jira_map, а при его отсутствии указывать «—»",
       "Агент должен установить итоговый статус запуска по фактическому результату, не выдавая PARTIAL-артефакт за SUCCESS"
     ],
     "forbidden_behavior": [
-      "Агент не должен добавлять требования, которых нет в разделе 3 и Приложениях А–В страницы 2818049",
+      "Агент не должен добавлять требования, которых нет в разделе 3 и Приложениях А–В исходной страницы",
       "Агент не должен ссылаться на REQ, BR, AC, RISK или OQ, отсутствующие в Requirement Review",
       "Агент не должен сообщать о создании задачи Jira или кейса Qase без фактического ID от инструмента",
       "Агент не должен устанавливать SUCCESS при незавершённых внешних записях",
@@ -31,7 +31,7 @@
     "name": "Противоречие в сроке периода доработки: 14 суток как правило и как параметр конфигурации",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "Б.2, Б.9, Приложение В строка 2, Приложение А строка 2.г, 3.1.8.б, 3.2.3.а",
       "stage": "requirement-review"
     },
@@ -56,7 +56,7 @@
     "name": "Неопределённое совместное действие ограничений на удаление версии",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.8.а, 3.1.8.б, 3.1.8.в, 3.1.8.е, VAL-004, VAL-005, VAL-006",
       "stage": "requirement-review"
     },
@@ -81,7 +81,7 @@
     "name": "Матрица 4.1.9 вне Scope: конфликт заявлен, но не разрешён",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.8.е, 3.1.8.г, Приложение В строка 1, 4.1.9, MISS-001, REQ-015",
       "stage": "requirement-review"
     },
@@ -106,7 +106,7 @@
     "name": "Пробел в правиле вычисления признака «размещена после даты завершения»",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.3, 4.1.7, Приложение В строка 6, 5.1.9, REQ-006, BR-013, MISS-002",
       "stage": "requirement-review"
     },
@@ -131,7 +131,7 @@
     "name": "Дословные тексты предупреждения и сообщения: подстановки вместо персональных данных",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.10, 3.1.11, 3.1.11.в, Б.6, Б.11, Приложение В строки 7–8, RISK-008",
       "stage": "source"
     },
@@ -156,7 +156,7 @@
     "name": "AC: MISSING для сущностей БД, у которых в Requirement Review нет Acceptance Criteria",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.1, REQ-023, REQ-024, CON-003, OQ-004",
       "stage": "task-design"
     },
@@ -181,7 +181,7 @@
     "name": "Декомпозиция задания для разработчиков с внешней зависимостью от доработки 4",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.2, 3.2.3.а–е, 3.2.4, DEP-003, MISS-004",
       "stage": "task-design"
     },
@@ -206,7 +206,7 @@
     "name": "Issue Type из проектного контекста, а не Priority (design)",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.3.а, 3.2.4, проектный контекст Jira",
       "stage": "jira-write"
     },
@@ -230,7 +230,7 @@
     "name": "Существующая задача Jira не дублируется",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.3.а, 3.2.3.г, created-entities.json",
       "stage": "jira-write"
     },
@@ -254,7 +254,7 @@
     "name": "Идемпотентность после timeout при создании задачи",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.3.г, created-entities.json, маркер agent-run",
       "stage": "jira-write"
     },
@@ -278,7 +278,7 @@
     "name": "Недоступность Jira не выдаётся за успешное создание",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.3.а, 3.2.4, внешняя запись Jira",
       "stage": "jira-write"
     },
@@ -302,7 +302,7 @@
     "name": "Проверяемый Expected Result для проверенной версии",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.8.в, 3.2.5.в, 3.2.5.ж, 3.2.5.з, REQ-013, VAL-004",
       "stage": "test-design"
     },
@@ -327,7 +327,7 @@
     "name": "Граница лимита версий 10 с учётом удалённых и risk-based сценарий",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.4, Б.9, Б.14, Приложение В строка 9, AC-011, BND-002, BND-003, BND-009, RISK-006",
       "stage": "test-design"
     },
@@ -352,7 +352,7 @@
     "name": "Jira Key указывается только из фактического jira_map",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.5, jira_map, локальные TASK-ID",
       "stage": "test-design"
     },
@@ -376,7 +376,7 @@
     "name": "Неопределённость «все версии удалены» не закрывается выдуманным Expected Result",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.1.2, 3.1.6, 3.1.8.г, 3.1.9, AMB-009, AMB-011, OQ-008",
       "stage": "test-design"
     },
@@ -400,7 +400,7 @@
     "name": "Запрет на создание Test Run и изменение результатов прогона",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "3.2.5, Qase, created-entities.json, маркер agent-run",
       "stage": "qase-write"
     },
@@ -424,7 +424,7 @@
     "name": "Эскалация неразрешённых конфликтов и корректный handoff",
     "input": {
       "source": "confluence",
-      "page_id": 2818049,
+      "page_ref": "SOURCE_PAGE_ID",
       "focus": "CON-001, CON-003, 3.1.8.е, OQ-004, матрица 4.1.9",
       "stage": "orchestration"
     },
